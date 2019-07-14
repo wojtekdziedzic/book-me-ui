@@ -1,0 +1,35 @@
+<div>
+  <mat-card class="offer-card" *ngFor="let offer of offers">
+    <mat-card-header>
+      <div mat-card-avatar class="offer-card-header-image"></div>
+      <mat-card-title>{{offer.title}}</mat-card-title>
+      <!--      <mat-card-subtitle>Dog Breed</mat-card-subtitle>-->
+    </mat-card-header>
+    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+    <mat-card-content>
+      <p>
+        {{offer.description}}
+      </p>
+    </mat-card-content>
+    <mat-card-footer>
+      <p>
+        {{+offer.priceShort | currency:'PLN':'symbol-narrow':undefined:'pl-PL'}}
+      </p>
+      <p>
+        {{+offer.priceLong | currency:'PLN':'symbol-narrow':undefined:'pl-PL'}}
+      </p>
+      <p *ngIf="offer.dateCreated">
+        Created: <br>
+        {{offer.dateCreated | date: 'd-MM-yyyy HH:mm:ss.SSS'}}
+      </p>
+      <p *ngIf="offer.dateUpdated">
+        Updated: <br>
+        {{offer.dateUpdated | date: 'd-MM-yyyy HH:mm:ss.SSS'}}
+      </p>
+    </mat-card-footer>
+    <mat-card-actions>
+      <button mat-button color="active">LIKE</button>
+      <button mat-button color="accent">SHARE</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
