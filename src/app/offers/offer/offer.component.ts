@@ -9,7 +9,7 @@ import {Offer} from './offer.model';
 })
 export class OfferComponent implements OnInit {
 
-  offers: Offer[] = [];
+  offers: Map<string, Offer>;
 
   constructor(
     private offersService: OfferService

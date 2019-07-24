@@ -10,35 +10,19 @@ import {map} from 'rxjs/operators';
 export class OfferService {
   apiUrl = environment.apiUrl;
 
-  constructor(private httpClient: HttpClient) {
-  }
-
-  private static _getDate(timestamp: null | number): null | Date {
-    return timestamp ? new Date(timestamp) : null;
-  }
+  constructor(private httpClient: HttpClient) {}
 
   public getOffers() {
-    return this.httpClient.get<{ [key: number]: Offer }>(this.apiUrl + 'offers/active')
+    return this.httpClient.get<{ [key: number]: Offer }>(this.apiUrl + 'offers')
       .pipe(
         map(responseData => {
-          const offersArray: Offer[] = [];
-          // const offersSet = new WeakSet();
+          const offersMap = new Map();
           for (const key in responseData) {
             if (responseData.hasOwnProperty(key)) {
-              // console.log(responseData[key]);
-              // offersSet.add(responseData[key]);
-              offersArray.push({
-                ...responseData[key],
-                priceLong: +responseData[key].priceLong,
-                priceShort: +responseData[key].priceShort,
-                dateCreated: OfferService._getDate(+responseData[key].dateCreated),
-                dateUpdated: OfferService._getDate(+responseData[key].dateUpdated)
-              });
+              offersMap.set(responseData[key].id, responseData[key]);
             }
           }
-          // console.log(JSON.stringify(offersArray, undefined, 2));
-          console.log(offersArray);
-          return [...offersArray];
+          return offersMap;
         })
       );
   }
